@@ -41,4 +41,15 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 
+
+    //Eventos de botones de la aplicación
+    $('#BotonAgregar').click(function() {
+        alert("pasa");
+        //$('#ConfirmarAgregar').show();
+        //$('#ConfirmarModificar').hide();
+        //limpiarFormulario();
+        //$("#FormularioDoc").modal('show');
+    });
+
+
 })
