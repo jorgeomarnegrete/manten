@@ -40,16 +40,99 @@ document.addEventListener("DOMContentLoaded", function() {
         },
     });
 
+    $('#tablaestado tbody').on('click', 'button.botonmodificar', function() {
+        $('#ConfirmarAgregar').hide();
+        $('#ConfirmarModificar').show();
+        let registro = estados.row($(this).parents('tr')).data();
+        recuperarRegistro(registro.id);
+    });
 
 
     //Eventos de botones de la aplicación
     $('#BotonAgregar').click(function() {
-        alert("pasa");
-        //$('#ConfirmarAgregar').show();
-        //$('#ConfirmarModificar').hide();
-        //limpiarFormulario();
-        //$("#FormularioDoc").modal('show');
+        $('#ConfirmarAgregar').show();
+        $('#ConfirmarModificar').hide();
+        limpiarFormulario();
+        $("#FormularioDoc").modal('show');
+
     });
 
+    $('#ConfirmarAgregar').click(function() {
+        $("#FormularioDoc").modal('hide');
+        let registro = recuperarDatosFormulario();
+        agregarRegistro(registro);
+    });
+
+
+    $('#ConfirmarModificar').click(function() {
+        $("#FormularioDoc").modal('hide');
+        let registro = recuperarDatosFormulario();
+        modificarRegistro(registro);
+    });
+
+
+    //Funciones de manejo de formulario
+
+    function limpiarFormulario(){
+        $('#txtId').val('');
+        $('#txtNombre').val('');
+    }
+
+
+    function recuperarDatosFormulario() {
+        let registro = {
+          id: $('#txtId').val(),
+          nombre: $('#txtNombre').val()
+          };
+        return registro;
+    }
+
+
+    //Funciones para comunicarse con la capa de datos en ajax
+    function agregarRegistro(registro) {
+
+        $.ajax({
+          type: 'POST',
+          url: 'data_estado.php?accion=agregar',
+          data: registro,
+          success: function(msg) {
+            estados.ajax.reload();
+          },
+          error: function() {
+            alert("Hay un problema al intentar agregar un registro");
+          }
+        });
+    }
+
+
+    function modificarRegistro(registro) {
+        $.ajax({
+          type: 'POST',
+          url: 'data_estado.php?accion=modificar&id=' + registro.id,
+          data: registro,
+          success: function(msg) {
+            estados.ajax.reload();
+          },
+          error: function() {
+            alert("Hay un problema al intentar modificar el registro");
+          }
+        });
+    }
+
+    function recuperarRegistro(id) {
+        $.ajax({
+          type: 'GET',
+          url: 'data_estado.php?accion=consultar&id=' + id,
+          data: '',
+          success: function(datos) {
+            $('#txtId').val(datos[0].id);
+            $('#txtNombre').val(datos[0].nombre);
+            $("#FormularioDoc").modal('show');
+          },
+          error: function() {
+            alert("Hay un problema al recuperar el registro");
+          }
+        });
+    }
 
 })

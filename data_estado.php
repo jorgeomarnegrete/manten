@@ -33,8 +33,7 @@ switch ($_GET['accion']) {
         break;
 
     case 'modificar':
-        $sql = "UPDATE estados SET nombre='$_POST[nombre]' 
-                                                nombre='$_POST[nombre]' WHERE id=$_GET[id]";
+        $sql = "UPDATE estados SET nombre='$_POST[nombre]' WHERE id=$_GET[id]";
         $respuesta = mysqli_query($conexion, $sql);
         echo json_encode($respuesta);
         break;
