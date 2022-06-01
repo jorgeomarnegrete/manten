@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Mantenimiento 1.0</title>
+      
+        <link href="bootstrap-4.3.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="datatables/datatables.min.css" rel="stylesheet">
+      
+        <script src="js/jquery-3.4.1.js"></script>
+        <script src="js/popper.min.js"></script>
+        <script src="bootstrap-4.3.1/js/bootstrap.min.js"></script>
+        <script src="datatables/datatables.min.js"></script>
+        <script src="maquinas.js"></script> 
+    </head>
+    <body>
+        <div class="container bg-primary">
+            <div class="row">
+                <div class="col-md">
+                    <h3 class="text-primary text-light" id="txtTitle">Titulo</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md">
+                <hr>
+            </div>
+        </div>
+        <div class="table-sm">
+            
+                <table class="table table-striped table-bordered table-hover" id="tablamaquinas">
+                  <thead>
+                    <tr>
+                      <td>Id</td>
+                      <td>Nombre</td>
+                      <td>Sector</td>
+                      <td>Modificar</td>
+                      <td>Borrar</td>
+                    </tr>
+                  </thead>
+                </table>
+                
+        
+        </div>
+
+        <div class="row">
+            <div class="col-md">
+                <button class="btn btn-sm btn-primary" id="BotonAgregar">Agregar Máquinas</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md">
+                <hr>
+            </div>
+        </div>
+
+
+        <!-- Formulario (Agregar, Modificar) -->
+
+        <div class="modal fade" id="FormularioDoc" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <input type="hidden" id="txtId">
+                        
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label>Nombre:</label>
+                                <input type="text" id="txtNombre" class="form-control" placeholder="">
+                            </div>
+                        </div>
+
+
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label>Sector:</label>
+                                <select id="slcSector" class="form-control" placeholder=""></select>
+                            </div>
+                        </div>
+
+                
+
+                        <div class="modal-footer">
+                            <button type="button" id="ConfirmarAgregar" class="btn btn-success">Agregar</button>
+                            <button type="button" id="ConfirmarModificar" class="btn btn-success">Modificar</button>
+                            <button type="button" class="btn btn-success" data-dismiss="modal">Cancelar</button>
+                        </div>
+
+            
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+    </body>
+</html>
