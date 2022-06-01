@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function() {
     $('#tablamaquinas tbody').on('click', 'button.botonmodificar', function() {
         $('#ConfirmarAgregar').hide();
         $('#ConfirmarModificar').show();
-        let registro = sectores.row($(this).parents('tr')).data();
+        let registro = maquinas.row($(this).parents('tr')).data();
         recuperarRegistro(registro.id);
     });
 
@@ -56,6 +56,7 @@ document.addEventListener("DOMContentLoaded", function() {
         $('#ConfirmarAgregar').show();
         $('#ConfirmarModificar').hide();
         limpiarFormulario();
+        llenarSectores(0);
         $("#FormularioDoc").modal('show');
 
     });
@@ -79,7 +80,6 @@ document.addEventListener("DOMContentLoaded", function() {
     function limpiarFormulario(){
         $('#txtId').val('');
         $('#txtNombre').val('');
-        $('#slcSector').val('');
     }
 
 
@@ -140,5 +140,36 @@ document.addEventListener("DOMContentLoaded", function() {
           }
         });
     }
+
+    function llenarSectores(id) {
+        alert(id);
+        var sector = $("#slcSector");
+        $.ajax({
+          type: 'GET',
+          url: 'data_sectores.php?accion=listar',
+          data: '',
+          success: function(t) {
+            
+            //Limpiamos el select
+            sector.find('option').remove();
+            
+            if(id==0){
+              sector.append('<option value="0">Seleccione</option>');
+            }
+  
+            $(t).each(function(i,v){ //indice, Valor
+              if(v.id == id) {
+                sector.append('<option value="' + v.id + '" selected>' + v.nombre + '</option>');
+              } else {
+                sector.append('<option value="' + v.id + '">' + v.nombre + '</option>');
+              }
+            })
+          },
+          error: function() {
+            alert('Error en el servidor al intentar llenar TipoDoc');
+          }
+        })
+  
+      }
 
 })
