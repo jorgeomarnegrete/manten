@@ -63,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     $('#ConfirmarAgregar').click(function() {
         $("#FormularioDoc").modal('hide');
-        let registro = recuperarDatosFormulario();
+        let registro = recuperarDatosFormulario()
         agregarRegistro(registro);
     });
 
@@ -86,8 +86,8 @@ document.addEventListener("DOMContentLoaded", function() {
     function recuperarDatosFormulario() {
         let registro = {
           id: $('#txtId').val(),
-          codigo: $('#txtCodigo').val(),
-          nombre: $('#txtNombre').val()
+          nombre: $('#txtNombre').val(),
+          sector: $('#slcSector').val()
           };
         return registro;
     }
@@ -98,10 +98,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
         $.ajax({
           type: 'POST',
-          url: 'data_sectores.php?accion=agregar',
+          url: 'data_maquinas.php?accion=agregar',
           data: registro,
           success: function(msg) {
-            sectores.ajax.reload();
+            maquinas.ajax.reload();
           },
           error: function() {
             alert("Hay un problema al intentar agregar un registro");
@@ -113,10 +113,10 @@ document.addEventListener("DOMContentLoaded", function() {
     function modificarRegistro(registro) {
         $.ajax({
           type: 'POST',
-          url: 'data_sectores.php?accion=modificar&id=' + registro.id,
+          url: 'data_maquinas.php?accion=modificar&id=' + registro.id,
           data: registro,
           success: function(msg) {
-            sectores.ajax.reload();
+            maquinas.ajax.reload();
           },
           error: function() {
             alert("Hay un problema al intentar modificar el registro");
@@ -127,12 +127,12 @@ document.addEventListener("DOMContentLoaded", function() {
     function recuperarRegistro(id) {
         $.ajax({
           type: 'GET',
-          url: 'data_sectores.php?accion=consultar&id=' + id,
+          url: 'data_maquinas.php?accion=consultar&id=' + id,
           data: '',
           success: function(datos) {
             $('#txtId').val(datos[0].id);
-            $('#txtCodigo').val(datos[0].codigo);
             $('#txtNombre').val(datos[0].nombre);
+            llenarSectores(datos[0].sector);
             $("#FormularioDoc").modal('show');
           },
           error: function() {
@@ -142,7 +142,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function llenarSectores(id) {
-        alert(id);
         var sector = $("#slcSector");
         $.ajax({
           type: 'GET',
