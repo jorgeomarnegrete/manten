@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-05-2022 a las 21:24:09
+-- Tiempo de generación: 03-06-2022 a las 02:02:02
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 8.0.9
 
@@ -67,6 +67,16 @@ CREATE TABLE `estados` (
   `nombre` varchar(50) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `estados`
+--
+
+INSERT INTO `estados` (`id`, `nombre`) VALUES
+(1, 'Orden Emitida'),
+(2, 'Orden en Curso'),
+(3, 'Orden Demorada'),
+(4, 'Orden Finalizada');
+
 -- --------------------------------------------------------
 
 --
@@ -80,6 +90,13 @@ CREATE TABLE `maquinas` (
   `sector` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `maquinas`
+--
+
+INSERT INTO `maquinas` (`id`, `nombre`, `sector`) VALUES
+(1, 'Seccionadora Galaxy', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -91,14 +108,15 @@ CREATE TABLE `ot` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `numero` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `fecha` datetime NOT NULL,
+  `sector` bigint(20) NOT NULL,
   `maquina` bigint(20) NOT NULL,
   `solicita` bigint(20) NOT NULL,
-  `asignado` bigint(20) NOT NULL,
+  `asignado` bigint(20) DEFAULT NULL,
   `falla` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `estado` bigint(20) NOT NULL,
-  `fechafin` datetime NOT NULL,
-  `horas_parada` bigint(10) NOT NULL,
-  `observaciones` varchar(200) COLLATE utf8_spanish_ci NOT NULL
+  `fechafin` datetime DEFAULT NULL,
+  `horas_parada` bigint(10) DEFAULT NULL,
+  `observaciones` varchar(200) COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -134,6 +152,13 @@ CREATE TABLE `personal` (
   `puesto` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `telefono` varchar(100) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `personal`
+--
+
+INSERT INTO `personal` (`id`, `nombre`, `sector`, `puesto`, `telefono`) VALUES
+(1, 'Mariano', 3, 'Encargado', '145558');
 
 -- --------------------------------------------------------
 
@@ -179,6 +204,16 @@ CREATE TABLE `sectores` (
   `codigo` varchar(20) COLLATE utf8_spanish_ci NOT NULL,
   `nombre` varchar(50) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `sectores`
+--
+
+INSERT INTO `sectores` (`id`, `codigo`, `nombre`) VALUES
+(1, '001', 'MSA'),
+(2, '002', 'ESTIFAN'),
+(3, '003', 'ATENNEAS'),
+(4, '', '');
 
 -- --------------------------------------------------------
 
@@ -299,13 +334,13 @@ ALTER TABLE `compras`
 -- AUTO_INCREMENT de la tabla `estados`
 --
 ALTER TABLE `estados`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `maquinas`
 --
 ALTER TABLE `maquinas`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `ot`
@@ -323,7 +358,7 @@ ALTER TABLE `ped_rep`
 -- AUTO_INCREMENT de la tabla `personal`
 --
 ALTER TABLE `personal`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedores`
@@ -341,7 +376,7 @@ ALTER TABLE `repuestos`
 -- AUTO_INCREMENT de la tabla `sectores`
 --
 ALTER TABLE `sectores`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `tareas`

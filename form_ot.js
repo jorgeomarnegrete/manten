@@ -4,73 +4,32 @@ document.addEventListener("DOMContentLoaded", function() {
     
     
     window.onload = function() {
-        document.getElementById("txtTitle").innerHTML="OT";
-        var acc = $_GET["accion"];
-        alert(acc);
+      document.getElementById("txtTitle").innerHTML="OT";
+      
+      const valores = window.location.search;
+      const urlParams = new URLSearchParams(valores);
+      var id = 0;
+      var comando = urlParams.get('accion'); 
+      if(comando=='agregar') {
+        id=0;
+      }else{
+        id = urlParams.get('id');
+      }
+
+      switch(comando) {
+        case 'agregar':
+          $('#ConfirmarAgregar').show();
+          $('#ConfirmarModificar').hide();
+          $('#AdministrarTareas').hide();
+          $('#AdministrarRepuestos').hide();
+          limpiarFormulario();
+          llenarSectores(0);
+          break;
+      }
+  
+
     }
 
-    let ot = $("#tablaot").DataTable({
-        "ajax": {
-            url: "data_orden.php?accion=listar",
-            dataSrc: ""
-        },
-        "columns": [{
-            "data": "id"
-        },
-        {
-            "data": "numero"
-        },
-        {
-            "data": "fecha"
-        },
-        {
-            "data": "maquina"
-        },
-        {
-            "data": "falla"
-        },
-        {
-            "data": "estado"
-        },
-        {
-            "data": null,
-            "orderable": false
-        },
-        {
-            "data": null,
-            "orderable": false
-        }],
-        "columnDefs": [{
-            targets: 6,
-            "defaultContent": "<button class='btn btn-sm btn-primary botonmodificar'>Modifica?</button>",
-            data: null
-        }, {
-            targets: 7,
-            "defaultContent": "<button class='btn btn-sm btn-primary botonborrar'>Borra?</button>",
-            data: null
-        }],
-        "language": {
-            "url": "DataTables/spanish.json",
-        },
-    });
-
-    $('#tablaot tbody').on('click', 'button.botonmodificar', function() {
-        $('#ConfirmarAgregar').hide();
-        $('#ConfirmarModificar').show();
-        let registro = maquinas.row($(this).parents('tr')).data();
-        recuperarRegistro(registro.id);
-    });
-
-
-    //Eventos de botones de la aplicación
-    $('#BotonAgregar').click(function() {
-        $('#ConfirmarAgregar').show();
-        $('#ConfirmarModificar').hide();
-        limpiarFormulario();
-        llenarSectores(0);
-        $("#FormularioDoc").modal('show');
-
-    });
 
     $('#ConfirmarAgregar').click(function() {
         $("#FormularioDoc").modal('hide');
@@ -90,7 +49,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function limpiarFormulario(){
         $('#txtId').val('');
-        $('#txtNombre').val('');
+        $('#txtFecha').val('');
+        $('#slcSector').val('');
+        $('#txtNumero').val('');
+        $('#slcMaquina').val('');
+        $('#txtFalla').val('');
+        $('#slcSolicita').val('');
     }
 
 
