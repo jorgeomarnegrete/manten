@@ -46,6 +46,13 @@ switch ($_GET['accion']) {
         $respuesta = mysqli_query($conexion, $sql);
         echo json_encode($respuesta);
         break;
+
+    case 'porsector':
+        $sql = "SELECT * FROM maquinas WHERE sector = $_GET[sector]";
+        $datos = mysqli_query($conexion, $sql);
+        $resultado = mysqli_fetch_all($datos, MYSQLI_ASSOC);
+        echo json_encode($resultado);
+        break;
 }
 
 ?>

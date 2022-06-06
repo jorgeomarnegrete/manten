@@ -45,6 +45,19 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
 
+    $('#slcSector').change(function() {
+      var sector = $('#slcSector').val();
+      llenarMaquinaPorSector(0,sector);
+
+    });
+
+    $('#txtFecha').change(function() {
+      var fecha = $('#txtFecha').val();
+      llenaNumero(fecha);
+
+    })
+
+
     //Funciones de manejo de formulario
 
     function limpiarFormulario(){
@@ -140,10 +153,48 @@ document.addEventListener("DOMContentLoaded", function() {
             })
           },
           error: function() {
-            alert('Error en el servidor al intentar llenar TipoDoc');
+            alert('Error en el servidor al intentar llenar sectores');
           }
         })
   
-      }
+    }
+
+    function llenarMaquinaPorSector(id, sector) {
+      var maquina = $("#slcMaquina");
+      $.ajax({
+        type: 'GET',
+        url: 'data_maquinas.php?accion=porsector&sector=' + sector,
+        data: '',
+        success: function(t) {
+          
+          //Limpiamos el select
+          maquina.find('option').remove();
+          
+          if(id==0){
+            maquina.append('<option value="0">Seleccione</option>');
+          }
+
+          $(t).each(function(i,v){ //indice, Valor
+            if(v.id == id) {
+              maquina.append('<option value="' + v.id + '" selected>' + v.nombre + '</option>');
+            } else {
+              maquina.append('<option value="' + v.id + '">' + v.nombre + '</option>');
+            }
+          })
+        },
+        error: function() {
+          alert('Error en el servidor al intentar llenar maquinas');
+        }
+      })
+
+    }
+
+
+    function llenaNumero(fecha) {
+        var ano = fecha.substring(0,4);
+        var mes = fecha.substring(5,7);
+        var dia = fecha.substring(8,10);
+        alert(ano + "-" + mes + "-" + dia);
+    }
 
 })
