@@ -24,6 +24,8 @@ document.addEventListener("DOMContentLoaded", function() {
           $('#AdministrarRepuestos').hide();
           limpiarFormulario();
           llenarSectores(0);
+          llenarPersonal(0);
+          llenarEstado(0);
           break;
       }
   
@@ -191,10 +193,84 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     function llenaNumero(fecha) {
-        var ano = fecha.substring(0,4);
-        var mes = fecha.substring(5,7);
-        var dia = fecha.substring(8,10);
-        alert(ano + "-" + mes + "-" + dia);
+      var ano = fecha.substring(0,4);
+      var mes = fecha.substring(5,7);
+      var dia = fecha.substring(8,10);
+      
+      $.ajax({
+        type: 'GET',
+        url: 'data_ot.php?accion=numero&ano=' + ano + '&mes=' + mes + '&dia=' + dia,
+        data: '',
+        success: function(datos) {
+          var orden = datos[0].nuevo.padStart(2,'0');
+          var numero = '3-8' + mes + dia + orden
+          $('#txtNumero').val(numero);
+        },
+        error: function() {
+          alert("Hay un problema al recuperar el numero");
+        }
+      });
+
     }
+
+    function llenarPersonal(id) {
+      var solicita = $('#slcSolicita');
+      $.ajax({
+        type: 'GET',
+        url: 'data_personal.php?accion=listar',
+        data: '',
+        success: function(t) {
+          
+          //Limpiamos el select
+          solicita.find('option').remove();
+          
+          if(id==0){
+            solicita.append('<option value="0">Seleccione</option>');
+          }
+
+          $(t).each(function(i,v){ //indice, Valor
+            if(v.id == id) {
+              solicita.append('<option value="' + v.id + '" selected>' + v.nombre + '</option>');
+            } else {
+              solicita.append('<option value="' + v.id + '">' + v.nombre + '</option>');
+            }
+          })
+        },
+        error: function() {
+          alert('Error en el servidor al intentar llenar personal');
+        }
+      })
+    }
+
+
+    function llenarEstado(id) {
+      var estado = $('#slcEstado');
+      $.ajax({
+        type: 'GET',
+        url: 'data_estado.php?accion=listar',
+        data: '',
+        success: function(t) {
+          
+          //Limpiamos el select
+          estado.find('option').remove();
+          
+          if(id==0){
+            estado.append('<option value="0">Seleccione</option>');
+          }
+
+          $(t).each(function(i,v){ //indice, Valor
+            if(v.id == id) {
+              estado.append('<option value="' + v.id + '" selected>' + v.nombre + '</option>');
+            } else {
+              estado.append('<option value="' + v.id + '">' + v.nombre + '</option>');
+            }
+          })
+        },
+        error: function() {
+          alert('Error en el servidor al intentar llenar Estados');
+        }
+      })
+    }
+
 
 })
