@@ -34,7 +34,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
     $('#ConfirmarAgregar').click(function() {
-        $("#FormularioDoc").modal('hide');
         let registro = recuperarDatosFormulario()
         agregarRegistro(registro);
     });
@@ -76,8 +75,12 @@ document.addEventListener("DOMContentLoaded", function() {
     function recuperarDatosFormulario() {
         let registro = {
           id: $('#txtId').val(),
-          nombre: $('#txtNombre').val(),
-          sector: $('#slcSector').val()
+          numero: $('#txtNumero').val(),
+          fecha: $('#txtFecha').val(),
+          sector: $('#slcSector').val(),
+          maquina: $('#slcMaquina').val(),
+          falla: $('#txtFalla').val(),
+          solicita: $('#slcSolicita')
           };
         return registro;
     }
@@ -88,10 +91,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
         $.ajax({
           type: 'POST',
-          url: 'data_maquinas.php?accion=agregar',
+          url: 'data_ot.php?accion=agregar',
           data: registro,
           success: function(msg) {
-            maquinas.ajax.reload();
+            //Traer Ultimo Registro
+            //recuperarRegistro(id)
+            //Mostrar ReadOnly
+            //Desabilitar y habilitar controles
           },
           error: function() {
             alert("Hay un problema al intentar agregar un registro");
