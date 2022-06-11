@@ -98,6 +98,7 @@ document.addEventListener("DOMContentLoaded", function() {
             //recuperarRegistro(id)
             //Mostrar ReadOnly
             //Desabilitar y habilitar controles
+            window.location.href = "orden.html";
           },
           error: function() {
             alert("Hay un problema al intentar agregar un registro");
