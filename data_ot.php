@@ -7,8 +7,11 @@ $conexion = retornarConexion();
 
 switch( $_GET['accion']){
     case 'numero':
-        $fecha = $_GET['ano'] . "-" . $_GET['mes'] . "-" . $_GET['dia'];
-        $sql = "SELECT COUNT(numero) AS nuevo FROM ot WHERE fecha = '" .$fecha."'";
+        //$fecha = $_GET['ano'] . "-" . $_GET['mes'] . "-" . $_GET['dia'];
+        $sql = "SELECT COUNT(numero) AS nuevo FROM ot WHERE 
+                            YEAR(fecha) = $_GET[ano] AND 
+                            MONTH(fecha) = $_GET[mes] AND 
+                            DAY(fecha) = $_GET[dia]";
         $datos = mysqli_query($conexion, $sql);
         $resultado = mysqli_fetch_all($datos, MYSQLI_ASSOC);
         echo json_encode($resultado);
@@ -19,13 +22,15 @@ switch( $_GET['accion']){
         $sql = "INSERT INTO ot ( fecha, 
                                 numero, 
                                 sector, 
-                                maquina, 
+                                maquina,
+                                falla,  
                                 solicita,
                                 estado ) VALUES ( 
                                 '$fecha', 
                                 '$_POST[numero]', 
                                 $_POST[sector], 
-                                $_POST[maquina], 
+                                $_POST[maquina],
+                                '$_POST[falla]',  
                                 $_POST[solicita], 
                                 $_POST[estado] )";
         $respuesta = mysqli_query($conexion, $sql);

@@ -35,13 +35,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     $('#ConfirmarAgregar').click(function() {
         let registro = recuperarDatosFormulario();
-        alert(registro.fecha);
-        alert(registro.numero);
-        alert(recistro.sector);
-        alert(registro.maquina);
-        alert(registro.solicita);
-        alert(registro.estado);
-        //agregarRegistro(registro);
+        agregarRegistro(registro);
     });
 
 
@@ -95,13 +89,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     //Funciones para comunicarse con la capa de datos en ajax
     function agregarRegistro(registro) {
-        alert(registro.fecha);
-        alert(registro.numero);
-        alert(recistro.sector);
-        alert(registro.maquina);
-        alert(registro.solicita);
-        alert(registro.estado);
-
+        
         $.ajax({
           type: 'POST',
           url: 'data_ot.php?accion=agregar',
@@ -111,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function() {
             //recuperarRegistro(id)
             //Mostrar ReadOnly
             //Desabilitar y habilitar controles
-            //window.location.href = "orden.html";
+            window.location.href = "orden.html";
           },
           error: function() {
             alert("Hay un problema al intentar agregar un registro");
