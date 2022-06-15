@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-06-2022 a las 03:32:08
+-- Tiempo de generación: 15-06-2022 a las 02:12:51
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 8.0.9
 
@@ -109,6 +109,7 @@ CREATE TABLE `ot` (
   `numero` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `fecha` datetime NOT NULL,
   `sector` bigint(20) NOT NULL,
+  `tipo` bigint(20) NOT NULL,
   `maquina` bigint(20) NOT NULL,
   `solicita` bigint(20) NOT NULL,
   `asignado` bigint(20) DEFAULT NULL,
@@ -118,6 +119,15 @@ CREATE TABLE `ot` (
   `horas_parada` bigint(10) DEFAULT NULL,
   `observaciones` varchar(200) COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `ot`
+--
+
+INSERT INTO `ot` (`id`, `numero`, `fecha`, `sector`, `tipo`, `maquina`, `solicita`, `asignado`, `falla`, `estado`, `fechafin`, `horas_parada`, `observaciones`) VALUES
+(1, '3-8061000', '2022-06-10 22:23:00', 1, 1, 1, 1, NULL, 'Algo', 1, NULL, NULL, NULL),
+(2, '3-8061001', '2022-06-10 22:43:00', 1, 1, 1, 1, NULL, 'Algo le pasa', 1, NULL, NULL, NULL),
+(3, '3-8061002', '2022-06-10 22:45:00', 1, 1, 1, 1, NULL, 'Sopladores', 1, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -233,6 +243,27 @@ CREATE TABLE `tareas` (
   `trabajos` varchar(200) COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipos`
+--
+
+DROP TABLE IF EXISTS `tipos`;
+CREATE TABLE `tipos` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `nombre` varchar(50) COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `tipos`
+--
+
+INSERT INTO `tipos` (`id`, `nombre`) VALUES
+(1, 'Correctivo'),
+(2, 'Preventivo'),
+(3, 'Otros');
+
 --
 -- Índices para tablas volcadas
 --
@@ -315,6 +346,13 @@ ALTER TABLE `tareas`
   ADD UNIQUE KEY `id` (`id`);
 
 --
+-- Indices de la tabla `tipos`
+--
+ALTER TABLE `tipos`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `id` (`id`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -346,7 +384,7 @@ ALTER TABLE `maquinas`
 -- AUTO_INCREMENT de la tabla `ot`
 --
 ALTER TABLE `ot`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `ped_rep`
@@ -383,6 +421,12 @@ ALTER TABLE `sectores`
 --
 ALTER TABLE `tareas`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `tipos`
+--
+ALTER TABLE `tipos`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
