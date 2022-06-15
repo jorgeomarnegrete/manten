@@ -7,8 +7,15 @@ $conexion = retornarConexion();
 
 switch ($_GET['accion']) {
     case 'listar':
-        $sql = "SELECT o.id, o.numero, o.fecha, m.nombre AS maquina, o.falla, e.nombre AS estado   
+        $sql = "SELECT o.id, 
+                o.numero, 
+                o.fecha, 
+                m.nombre AS maquina, 
+                t.nombre AS tipo, 
+                o.falla, 
+                e.nombre AS estado   
                 FROM ot o
+                INNER JOIN tipos t ON o.tipo = t.id
                 INNER JOIN estados e ON o.estado = e.id 
                 INNER JOIN maquinas m ON o.maquina = m.id 
                 ORDER BY m.id";

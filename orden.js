@@ -25,6 +25,9 @@ document.addEventListener("DOMContentLoaded", function() {
             "data": "maquina"
         },
         {
+            "data": "tipo"
+        },
+        {
             "data": "falla"
         },
         {
@@ -39,11 +42,11 @@ document.addEventListener("DOMContentLoaded", function() {
             "orderable": false
         }],
         "columnDefs": [{
-            targets: 6,
+            targets: 7,
             "defaultContent": "<button class='btn btn-sm btn-primary botonmodificar'>Modifica?</button>",
             data: null
         }, {
-            targets: 7,
+            targets: 8,
             "defaultContent": "<button class='btn btn-sm btn-primary botonborrar'>Borra?</button>",
             data: null
         }],
