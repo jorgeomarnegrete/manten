@@ -23,6 +23,7 @@ switch( $_GET['accion']){
                                 numero, 
                                 sector, 
                                 maquina,
+                                tipo,
                                 falla,  
                                 solicita,
                                 estado ) VALUES ( 
@@ -30,6 +31,7 @@ switch( $_GET['accion']){
                                 '$_POST[numero]', 
                                 $_POST[sector], 
                                 $_POST[maquina],
+                                $_POST[tipo],
                                 '$_POST[falla]',  
                                 $_POST[solicita], 
                                 $_POST[estado] )";

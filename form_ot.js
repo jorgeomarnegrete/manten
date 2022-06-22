@@ -22,8 +22,10 @@ document.addEventListener("DOMContentLoaded", function() {
           $('#ConfirmarModificar').hide();
           $('#AdministrarTareas').hide();
           $('#AdministrarRepuestos').hide();
+          $('#ImprimirOrden').hide();
           limpiarFormulario();
           llenarSectores(0);
+          llenarTipos(0);
           llenarPersonal(0);
           llenarEstado(0);
           break;
@@ -66,11 +68,24 @@ document.addEventListener("DOMContentLoaded", function() {
         $('#txtFecha').val('');
         $('#slcSector').val('');
         $('#txtNumero').val('');
+        $('#txtNumero').attr('disabled', true);
         $('#slcMaquina').val('');
+        $('#slcTipo').val('');
         $('#txtFalla').val('');
         $('#slcSolicita').val('');
+        $('#slcEstado').val('');
     }
 
+    function formReadOnly(ro){
+      $('#txtFecha').attr('disabled', ro);
+      $('#slcSector').attr('disabled', ro);
+      $('#txtNumero').attr('disabled', ro);
+      $('#slcMaquina').attr('disabled', ro);
+      $('#slcTipo').attr('disabled', ro);
+      $('#txtFalla').attr('disabled', ro);
+      $('#slcSolicita').attr('disabled', ro);
+      $('#slcEstado').attr('disabled', ro);
+  }
 
     function recuperarDatosFormulario() {
         let registro = {
@@ -79,6 +94,7 @@ document.addEventListener("DOMContentLoaded", function() {
           fecha: $('#txtFecha').val(),
           sector: $('#slcSector').val(),
           maquina: $('#slcMaquina').val(),
+          tipo: $('#slcTipo').val(),
           falla: $('#txtFalla').val(),
           solicita: $('#slcSolicita').val(),
           estado: $('#slcEstado').val()
@@ -95,11 +111,13 @@ document.addEventListener("DOMContentLoaded", function() {
           url: 'data_ot.php?accion=agregar',
           data: registro,
           success: function(msg) {
-            //Traer Ultimo Registro
-            //recuperarRegistro(id)
-            //Mostrar ReadOnly
-            //Desabilitar y habilitar controles
-            window.location.href = "orden.html";
+            formReadOnly(true);
+            $('#ConfirmarAgregar').hide();
+            $('#ConfirmarModificar').show();
+            $('#AdministrarTareas').show();
+            $('#AdministrarRepuestos').show();
+            $('#ImprimirOrden').show();
+            
           },
           error: function() {
             alert("Hay un problema al intentar agregar un registro");
@@ -276,6 +294,35 @@ document.addEventListener("DOMContentLoaded", function() {
         },
         error: function() {
           alert('Error en el servidor al intentar llenar Estados');
+        }
+      })
+    }
+
+    function llenarTipos(id) {
+      var tipo = $('#slcTipo');
+      $.ajax({
+        type: 'GET',
+        url: 'data_tipo.php?accion=listar',
+        data: '',
+        success: function(t) {
+          
+          //Limpiamos el select
+          tipo.find('option').remove();
+          
+          if(id==0){
+            tipo.append('<option value="0">Seleccione</option>');
+          }
+
+          $(t).each(function(i,v){ //indice, Valor
+            if(v.id == id) {
+              tipo.append('<option value="' + v.id + '" selected>' + v.nombre + '</option>');
+            } else {
+              tipo.append('<option value="' + v.id + '">' + v.nombre + '</option>');
+            }
+          })
+        },
+        error: function() {
+          alert('Error en el servidor al intentar llenar Tipos');
         }
       })
     }
