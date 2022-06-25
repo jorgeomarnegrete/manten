@@ -29,6 +29,10 @@ document.addEventListener("DOMContentLoaded", function() {
           llenarPersonal(0);
           llenarEstado(0);
           break;
+
+        case 'modificar':
+          //Recuperar Registro
+
       }
   
 
@@ -40,6 +44,9 @@ document.addEventListener("DOMContentLoaded", function() {
         agregarRegistro(registro);
     });
 
+    $('#imprimirOrden').click(function() {
+
+    })
 
     $('#ConfirmarModificar').click(function() {
         $("#FormularioDoc").modal('hide');
@@ -143,12 +150,14 @@ document.addEventListener("DOMContentLoaded", function() {
     function recuperarRegistro(id) {
         $.ajax({
           type: 'GET',
-          url: 'data_maquinas.php?accion=consultar&id=' + id,
+          url: 'data_ot.php?accion=consultar&id=' + id,
           data: '',
           success: function(datos) {
             $('#txtId').val(datos[0].id);
-            $('#txtNombre').val(datos[0].nombre);
+            $('#txtFecha').val(datos[0].fecha);
             llenarSectores(datos[0].sector);
+            llenarTipos(datos[0].tipo):
+            
             $("#FormularioDoc").modal('show');
           },
           error: function() {
