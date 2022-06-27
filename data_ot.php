@@ -38,6 +38,21 @@ switch( $_GET['accion']){
         $respuesta = mysqli_query($conexion, $sql);
         echo json_encode($respuesta);
         break;
+
+    case 'getid':
+        $sql = "SELECT MAX(id) AS id FROM ot";
+        $datos = mysqli_query($conexion, $sql);
+        $resultado = mysqli_fetch_all($datos, MYSQLI_ASSOC);
+        echo json_encode($resultado);
+        break;
+
+    case 'consultar':
+        $sql = "SELECT * FROM ot WHERE id=$_GET[id]";
+        $datos = mysqli_query($conexion, $sql);
+        $resultado = mysqli_fetch_all($datos, MYSQLI_ASSOC);
+        echo json_encode($resultado);
+        break;
+
 }
 
 
