@@ -42,6 +42,9 @@ document.addEventListener("DOMContentLoaded", function() {
     $('#ConfirmarAgregar').click(function() {
         let registro = recuperarDatosFormulario();
         agregarRegistro(registro);
+        obtenerIdAgregado();
+        id = $('#txtId').val();
+        registro = recuperarRegistro(id);
     });
 
     $('#imprimirOrden').click(function() {
@@ -156,15 +159,30 @@ document.addEventListener("DOMContentLoaded", function() {
             $('#txtId').val(datos[0].id);
             $('#txtFecha').val(datos[0].fecha);
             llenarSectores(datos[0].sector);
-            llenarTipos(datos[0].tipo):
+            llenarTipos(datos[0].tipo);
             
-            $("#FormularioDoc").modal('show');
+          
           },
           error: function() {
             alert("Hay un problema al recuperar el registro");
           }
         });
     }
+
+    function obtenerIdAgregado() {
+        $.ajax({
+          type: 'GET',
+          url: 'data_ot.php?accion=getid',
+          data: '',
+          success: function(datos) {
+            $('#txtId').val(datos[0].id);
+          },
+          error: function() {
+            alert("Problemas al obtener el Id");
+          }
+        });
+    }
+
 
     function llenarSectores(id) {
         var sector = $("#slcSector");
