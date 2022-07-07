@@ -127,6 +127,8 @@ document.addEventListener("DOMContentLoaded", function() {
             $('#AdministrarTareas').show();
             $('#AdministrarRepuestos').show();
             $('#ImprimirOrden').show();
+            let idx = obtenerIdAgregado();
+            recuperarRegistro(idx);
             
           },
           error: function() {
@@ -157,11 +159,14 @@ document.addEventListener("DOMContentLoaded", function() {
           data: '',
           success: function(datos) {
             $('#txtId').val(datos[0].id);
-            $('#txtFecha').val(datos[0].fecha);
+            $('#txtNumero').val(datos[0].numero);
+            $('#txtFecha').val(datos[0].fecha); 
             llenarSectores(datos[0].sector);
             llenarTipos(datos[0].tipo);
-            
-          
+            llenarMaquinaPorSector(datos[0].maquina, datos[0].sector);
+            llenarPersonal(datos[0].solicita);
+            $('#txtFalla').val(datos[0].falla);
+            llenarEstado(datos[0].estado);
           },
           error: function() {
             alert("Hay un problema al recuperar el registro");
